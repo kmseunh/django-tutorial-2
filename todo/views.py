@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import auth
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
@@ -88,7 +89,7 @@ def register(request):
 
             form.save()
 
-            return HttpResponse("The user was registered!")
+            return redirect("")
 
     context = {"form": form}
 
@@ -114,8 +115,27 @@ def my_login(request):
 
                 auth.login(request, user)
 
-                return HttpResponse("You have logged in!")
+                return redirect("dashboard")
 
     context = {"form": form}
 
     return render(request, "my-login.html", context=context)
+
+
+@login_required(login_url="my-login")
+def dashboard(request):
+
+    return render(request, "dashboard.html")
+
+
+@login_required(login_url="my-login")
+def my_profile(request):
+
+    pass
+
+
+def user_logout(request):
+
+    auth.logout(request)
+
+    return redirect("")
