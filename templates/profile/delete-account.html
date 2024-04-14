@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}">
     <link rel="stylesheet" href="https://bootswatch.com/5/solar/bootstrap.min.css">
-    <title>Taskly | Delete task</title>
+    <title>Taskly | Delete account</title>
   </head>
 
   {% include "profile/base.html" %}
@@ -18,7 +18,7 @@
 
   <div class="container bg-white shadow-md p-5 form-layout">
 
-    <h3>Delete a task.</h3>
+    <h3>Delete a account.</h3>
 
     <hr>
 
@@ -34,9 +34,9 @@
 
       <br>
 
-      <a href="{% url 'dashboard' %}" class="btn btn-outline-primary">Go Back</a>
+      <a href="{% url 'profile-management' %}" class="btn btn-outline-primary">Go Back</a>
 
-      <input class="btn btn-outline-primary" type="submit" value="Delete task">
+      <input class="btn btn-outline-primary" type="submit" value="Delete account">
     </form>
 
   </div>

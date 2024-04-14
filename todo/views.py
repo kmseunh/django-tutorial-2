@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import auth
+from django.contrib.auth.models import User, auth
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
@@ -161,3 +161,17 @@ def profile_management(request):
     context = {"user_form": user_form}
 
     return render(request, "profile/profile-management.html", context=context)
+
+
+@login_required(login_url="my-login")
+def delete_account(request):
+
+    if request.method == "POST":
+
+        delete_user = User.objects.get(username=request.user)
+
+        delete_user.delete()
+
+        return redirect("")
+
+    return render(request, "profile/delete-account.html")

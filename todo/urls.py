@@ -3,6 +3,7 @@ from django.urls import path
 from .views import (
     create_task,
     dashboard,
+    delete_account,
     delete_task,
     home,
     my_login,
@@ -33,4 +34,6 @@ urlpatterns = [
     path("delete-task/<str:pk>/", delete_task, name="delete-task"),
     # Profile Management
     path("profile-management", profile_management, name="profile-management"),
+    # Delete Account
+    path("delete-account", delete_account, name="delete-account"),
 ]
