@@ -4,7 +4,8 @@ from django.contrib.auth.models import auth
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
-from .forms import CreateUserForm, LoginForm
+from .forms import CreateTaskForm, CreateUserForm, LoginForm
+from .models import Task
 
 
 def home(request):
@@ -24,7 +25,7 @@ def register(request):
 
             form.save()
 
-            return redirect("")
+            return redirect("my-login")
 
     context = {"form": form}
 
@@ -57,14 +58,86 @@ def my_login(request):
     return render(request, "my-login.html", context=context)
 
 
-@login_required(login_url="my-login")
-def dashboard(request):
-
-    return render(request, "dashboard.html")
-
-
 def user_logout(request):
 
     auth.logout(request)
 
     return redirect("")
+
+
+@login_required(login_url="my-login")
+def dashboard(request):
+
+    return render(request, "profile/dashboard.html")
+
+
+@login_required(login_url="my-login")
+def create_task(request):
+
+    form = CreateTaskForm()
+
+    if request.method == "POST":
+
+        form = CreateTaskForm(request.POST)
+
+        if form.is_valid():
+
+            task = form.save(commit=False)
+
+            task.user = request.user
+
+            task.save()
+
+            return redirect("view-tasks")
+
+    context = {"form": form}
+
+    return render(request, "profile/create-task.html", context=context)
+
+
+@login_required(login_url="my-login")
+def view_tasks(request):
+
+    current_user = request.user.id
+
+    tasks = Task.objects.all().filter(user=current_user)
+
+    context = {"tasks": tasks}
+
+    return render(request, "profile/view-tasks.html", context=context)
+
+
+@login_required(login_url="my-login")
+def update_task(request, pk):
+
+    task = Task.objects.get(id=pk)
+
+    form = CreateTaskForm(instance=task)
+
+    if request.method == "POST":
+
+        form = CreateTaskForm(request.POST, instance=task)
+
+        if form.is_valid():
+
+            form.save()
+
+            return redirect("view-tasks")
+
+    context = {"form": form}
+
+    return render(request, "profile/update-task.html", context=context)
+
+
+@login_required(login_url="my-login")
+def delete_task(request, pk):
+
+    task = Task.objects.get(id=pk)
+
+    if request.method == "POST":
+
+        task.delete()
+
+        return redirect("view-tasks")
+
+    return render(request, "profile/delete-task.html")

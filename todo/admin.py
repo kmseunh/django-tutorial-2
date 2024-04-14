@@ -1,4 +1,5 @@
 from django.contrib import admin
 
-# admin.site.register(Task)
-# admin.site.register(Review)
+from .models import Task
+
+admin.site.register(Task)

@@ -1,7 +1,5 @@
 {% load static %}
 
-{% load crispy_forms_tags %}
-
 <html>
 
   <head>
@@ -15,32 +13,36 @@
 
   <br>
 
-  <div class="container bg-white shadow-md p-5 form-layout">
+  <h3 class="text-center">
+    My tasks
+  </h3>
 
-    <h3>Login page.</h3>
-
-    <hr>
-
-    <br>
-
-    <form method="post" autocomplete="off">
-
-      {% csrf_token %}
-
-      {{form.username|as_crispy_field}}
-
-      <br>
-
-      {{form.password|as_crispy_field}}
-
-      <br>
-
-      <input class="btn btn-outline-primary" type="submit" value="Submit">
-
-    </form>
-
-  </div>
+  <hr>
 
   <br>
+
+  {% for task in tasks %}
+
+    <div class="container bg-white shadow-md p-5 form-layout" style="margin-top:20px;">
+
+      {{task.title}}
+
+      <br>
+
+      {{task.content}}
+
+      <br>
+
+      <a href="{% url "update-task" task.id %}">Update task</a>
+
+      <a href="{% url "delete-task" task.id %}">Delete tasks</a>
+
+    </div>
+
+  {% endfor %}
+
+</div>
+
+<br>
 
 </html>
