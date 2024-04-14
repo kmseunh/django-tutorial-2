@@ -4,7 +4,7 @@ from django.contrib.auth.models import auth
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
-from .forms import CreateTaskForm, CreateUserForm, LoginForm
+from .forms import CreateTaskForm, CreateUserForm, LoginForm, UpdateUserForm
 from .models import Task
 
 
@@ -141,3 +141,23 @@ def delete_task(request, pk):
         return redirect("view-tasks")
 
     return render(request, "profile/delete-task.html")
+
+
+@login_required(login_url="my-login")
+def profile_management(request):
+
+    if request.method == "POST":
+
+        user_form = UpdateUserForm(request.POST, instance=request.user)
+
+        if user_form.is_valid():
+
+            user_form.save()
+
+            return redirect("dashboard")
+
+    user_form = UpdateUserForm(instance=request.user)
+
+    context = {"user_form": user_form}
+
+    return render(request, "profile/profile-management.html", context=context)

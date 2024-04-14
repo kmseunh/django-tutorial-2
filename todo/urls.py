@@ -6,6 +6,7 @@ from .views import (
     delete_task,
     home,
     my_login,
+    profile_management,
     register,
     update_task,
     user_logout,
@@ -30,4 +31,6 @@ urlpatterns = [
     path("update-task/<str:pk>/", update_task, name="update-task"),
     # Delete a task
     path("delete-task/<str:pk>/", delete_task, name="delete-task"),
+    # Profile Management
+    path("profile-management", profile_management, name="profile-management"),
 ]

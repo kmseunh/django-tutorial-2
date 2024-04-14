@@ -25,6 +25,18 @@ class LoginForm(AuthenticationForm):
 class CreateTaskForm(ModelForm):
 
     class Meta:
+
         model = Task
         fields = ["title", "content"]
         exclude = ["user"]
+
+
+class UpdateUserForm(ModelForm):
+
+    password = None
+
+    class Meta:
+
+        model = User
+        fields = ["username", "email"]
+        exclude = ["password1", "password2"]
