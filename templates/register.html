@@ -1,12 +1,41 @@
-{% include "base.html" %}
+{% load static %}
 
-<h2>This is our Registration page.</h2>
+{% load crispy_forms_tags %}
 
-<form method="POST" autocomplete="off">
+<html>
 
-  {% csrf_token %}
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}">
+    <link rel="stylesheet" href="https://bootswatch.com/5/solar/bootstrap.min.css">
+  </head>
 
-  {{form.as_p}}
+  {% include "base.html" %}
 
-  <input type="submit" value="Submit">
-</form>
+  <br>
+
+  <div class="container bg-white shadow-md p-5 form-layout">
+
+    <h3>Registration page.</h3>
+
+    <hr>
+
+    <br>
+
+    <form method="POST" autocomplete="off">
+
+      {% csrf_token %}
+
+      {{form|crispy}}
+
+      <br>
+
+      <input class="btn btn-outline-primary" type="submit" value="Submit">
+    </form>
+
+  </div>
+
+  <br>
+
+</html>
