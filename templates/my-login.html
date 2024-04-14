@@ -40,10 +40,29 @@
 
       <a href="{% url 'register' %}" class="btn btn-outline-danger">Register</a>
 
+      <br>
+      <br>
+
+      {% for message in messages %}
+
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+
+          <p id="message-timer" class="alert alert-success float-center text-center message-text">
+
+            {{ message }}
+
+          </p>
+
+        {% endif %}
+
+      {% endfor %}
+
     </form>
 
   </div>
 
   <br>
+
+  <script src="{% static "js/app.js" %}"></script>
 
 </html>
