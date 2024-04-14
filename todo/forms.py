@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django.forms.widgets import PasswordInput, TextInput
 
-from .models import Task
+from .models import Profile, Task
 
 
 # Register a user
@@ -40,3 +40,15 @@ class UpdateUserForm(ModelForm):
         model = User
         fields = ["username", "email"]
         exclude = ["password1", "password2"]
+
+
+class UpdateProfileForm(ModelForm):
+
+    profile_pic = forms.ImageField(
+        widget=forms.FileInput(attrs={"class": "form-control-file"})
+    )
+
+    class Meta:
+
+        model = Profile
+        fields = ["profile_pic"]

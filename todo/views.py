@@ -5,8 +5,14 @@ from django.contrib.auth.models import User, auth
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
-from .forms import CreateTaskForm, CreateUserForm, LoginForm, UpdateUserForm
-from .models import Task
+from .forms import (
+    CreateTaskForm,
+    CreateUserForm,
+    LoginForm,
+    UpdateProfileForm,
+    UpdateUserForm,
+)
+from .models import Profile, Task
 
 
 def home(request):
@@ -24,7 +30,11 @@ def register(request):
 
         if form.is_valid():
 
+            current_user = form.save(commit=False)
+
             form.save()
+
+            profile = Profile.objects.create(user=current_user)
 
             messages.success(request, "User registration was successful!")
 
@@ -70,6 +80,10 @@ def user_logout(request):
 
 @login_required(login_url="my-login")
 def dashboard(request):
+
+    profile_pic = Profile.objects.get(user=request.user)
+
+    context = {"profile": profile_pic}
 
     return render(request, "profile/dashboard.html")
 
@@ -149,9 +163,17 @@ def delete_task(request, pk):
 @login_required(login_url="my-login")
 def profile_management(request):
 
+    user_form = UpdateUserForm(instance=request.user)
+
+    profile = Profile.objects.get(user=request.user)
+
+    form_2 = UpdateProfileForm(instance=profile)
+
     if request.method == "POST":
 
         user_form = UpdateUserForm(request.POST, instance=request.user)
+
+        form_2 = UpdateProfileForm(request.POST, request.FILES, instance=profile)
 
         if user_form.is_valid():
 
@@ -159,9 +181,13 @@ def profile_management(request):
 
             return redirect("dashboard")
 
-    user_form = UpdateUserForm(instance=request.user)
+        if form_2.is_valid():
 
-    context = {"user_form": user_form}
+            form_2.save()
+
+            return redirect("dashboard")
+
+    context = {"user_form": user_form, "form_2": form_2}
 
     return render(request, "profile/profile-management.html", context=context)
 
