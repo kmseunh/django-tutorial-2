@@ -7,9 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}">
     <link rel="stylesheet" href="https://bootswatch.com/5/solar/bootstrap.min.css">
+    <title>Taskly | View tasks</title>
   </head>
 
-  {% include "base.html" %}
+  {% include "profile/base.html" %}
 
   <br>
 
@@ -19,24 +20,24 @@
 
   <hr>
 
-  <br>
-
   {% for task in tasks %}
 
     <div class="container bg-white shadow-md p-5 form-layout" style="margin-top:20px;">
 
-      {{task.title}}
+      <h4>
+        {{task.title}}
+      </h4>
 
       <br>
 
       {{task.content}}
 
       <br>
+      <br>
 
-      <a href="{% url "update-task" task.id %}">Update task</a>
+      <a href="{% url "update-task" task.id %}" class="btn btn-outline-info">Update task</a>
 
-      <a href="{% url "delete-task" task.id %}">Delete tasks</a>
-
+      <a href="{% url "delete-task" task.id %}" class="btn btn-outline-danger">Delete task</a>
     </div>
 
   {% endfor %}

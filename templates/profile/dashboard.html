@@ -7,23 +7,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}">
     <link rel="stylesheet" href="https://bootswatch.com/5/solar/bootstrap.min.css">
+    <title>Taskly | Dashboard</title>
   </head>
 
-  {% include "base.html" %}
+  {% include "profile/base.html" %}
 
   <br>
 
   <div class="container bg-white shadow-md p-5 form-layout">
 
-    <h3>This is our Dashboard page!</h3>
+    <h3>
+      Taskly
+    </h3>
 
     <hr>
 
-    <a href="{% url 'create-task' %}" class="btn btn-outline-primary">Create task</a>
-
-    <a href="{% url 'view-tasks' %}" class="btn btn-outline-primary">View tasks</a>
-
-    <a href="{% url 'user-logout' %}" class="btn btn-outline-danger">Logout</a>
+    <p>
+      Welcome, to Taskly -
+      <br>
+      <br>
+      your personal task manager application.
+    </p>
 
   </div>
 
